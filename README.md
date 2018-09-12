@@ -1,4 +1,6 @@
-## This is a fork of https://github.com/apolakipso/FormatRadio the create.py script was edited to support Windows Filesystems
+## This is a fork of https://github.com/apolakipso/FormatRadio. The create.py script was edited to support Windows Filesystems. Install Python 2.7 and ffmpeg and add the ffmpeg bin folder to your Path variable. 
+
+## Open cmd, navigate to the folder where you cloned / downloaded Formatradio (e.g. D:\FormatRadio) and call c:\Python27\python.exe create.py
 
 # Format Radio
 
