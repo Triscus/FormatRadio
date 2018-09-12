@@ -96,7 +96,7 @@ def loadConfig(path):
     return json.loads(open(path).read())
 
 def getPath(targetFolder, key, currentVolume, currentFolder):
-    path = "%s/%s-%d/%d" % (targetFolder, key, currentVolume, currentFolder)
+    path = "%s\\%s-%d\\%d" % (targetFolder, key, currentVolume, currentFolder)
     if not os.path.isdir(path):
         os.system("mkdir -p %s" % path)
     return path
@@ -202,7 +202,7 @@ def exit(s):
     sys.exit(s)
 
 def convertFile(sourceFile, targetFile, overwrite):
-    cmd = "ffmpeg -i '%s' %s -f s16le -ac 1 -loglevel error -stats -ar 44100 -acodec pcm_s16le '%s'" % (
+    cmd = "ffmpeg -i \"%s\" %s -f s16le -ac 1 -loglevel error -stats -ar 44100 -acodec pcm_s16le \"%s\"" % (
         sourceFile,
         '-y' if overwrite else '',
         targetFile
@@ -259,9 +259,9 @@ def main():
         url = s['url']
         name = s['name']
         key = s['key']
-        sourceFolder = rootFolder + key + "/source"
-        targetFolder = rootFolder + key # + "/target"
-        archive = "%s/%s.zip" % (sourceFolder, key)
+        sourceFolder = rootFolder + key + "\\source"
+        targetFolder = rootFolder + key # + "\\target"
+        archive = "%s\\%s.zip" % (sourceFolder, key)
 
         if not os.path.isdir(sourceFolder):
             printStep('Creating source dir %s' % sourceFolder)
@@ -292,12 +292,12 @@ def main():
     if mode == 'convertOnly':
         # check source
         sourcePath = sourceFolder + (s['path'] if 'path' in s else '')
-        # if not sourcePath.endswith('/'): sourcePath += '/'
+        # if not sourcePath.endswith('\\'): sourcePath += '\\'
         if not os.path.isdir(sourcePath):
             exit("Source path is invalid: %s" % sourcePath)
 
         # create target
-        targetFolder = "%s/%s/" % (targetFolder, key)
+        targetFolder = "%s\\%s\\" % (targetFolder, key)
         os.system("mkdir -p %s" % targetFolder)
 
         # copy source files
@@ -334,9 +334,9 @@ def main():
 
     printStep('Set contains %d files' % filesInSet)
 
-    os.system("mkdir -p %s/%s-%d" % (targetFolder, key, currentVolume))
+    os.system("mkdir -p %s\\%s-%d" % (targetFolder, key, currentVolume))
 
-    writeSettings("%s/%s-%d/%s" % (targetFolder, key, currentVolume, SETTINGS_FILE), settings)
+    writeSettings("%s\\%s-%d\\%s" % (targetFolder, key, currentVolume, SETTINGS_FILE), settings)
     path = getPath(targetFolder, key, currentVolume, currentFolder)
 
     if mode == 'spreadAcrossVolumes':
@@ -357,7 +357,7 @@ def main():
         print f
         if currentFile < maxFilesPerFolder:
             baseName = os.path.basename(f)
-            targetFile = "%s/%d.raw" % (path, currentFile)
+            targetFile = "%s\\%d.raw" % (path, currentFile)
             name, ext = os.path.splitext(f)
 
             if (ext.upper() in EXT_OTHER):
@@ -383,7 +383,7 @@ def main():
                 currentFolder = 0
                 currentFile = 0
                 path = getPath(targetFolder, key, currentVolume, currentFolder)
-                writeSettings("%s/%s-%d/%s" % (targetFolder, key, currentVolume, SETTINGS_FILE), settings)
+                writeSettings("%s\\%s-%d\\%s" % (targetFolder, key, currentVolume, SETTINGS_FILE), settings)
 
         else:
             currentFile = 0
@@ -396,11 +396,11 @@ def main():
                 currentFile = 0
 
             path = getPath(targetFolder, key, currentVolume, currentFolder)
-            writeSettings("%s/%s-%d/%s" % (targetFolder, key, currentVolume, SETTINGS_FILE), settings)
+            writeSettings("%s\\%s-%d\\%s" % (targetFolder, key, currentVolume, SETTINGS_FILE), settings)
 
     printStatus('Created %d volumes here: %s' % (currentVolume + 1, targetFolder))
     #for i in range(0, currentVolume + 1):
-    #    os.system('du -hcs %s/%s-%d' % (targetFolder, key, i))
+    #    os.system('du -hcs %s\\%s-%d' % (targetFolder, key, i))
 
     # clean up
     #os.system('rm -rf %s' % sourceFolder)
