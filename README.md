@@ -1,3 +1,5 @@
+## This is a fork of https://github.com/apolakipso/FormatRadio the create.py script was edited to support Windows Filesystems
+
 # Format Radio
 
 ## Helping you get sound packs into your Radio Music
